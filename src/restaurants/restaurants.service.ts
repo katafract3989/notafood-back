@@ -8,25 +8,29 @@ import {Restaurant} from "./entity/restaurant.entity"
 export class RestaurantsService {
 
     async getRestaurants() {
-        return await AppDataSource.manager.find(Restaurant)
+        const result = await AppDataSource.manager.find(Restaurant, {
+            relations: {
+                categories: true,
+            },
+        })
+        return {data: result}
     }
 
     async getRestaurant(id: number) {
-        return await AppDataSource.manager.findOneByOrFail(Restaurant,{ id: id})
+        const result = await AppDataSource.manager.findOneByOrFail(Restaurant, {id: id})
+        return {data: result}
     }
 
     async create(restaurantDto: CreateRestaurantDto) {
-        await AppDataSource.manager.insert(Restaurant, {
-            ...restaurantDto,
-        })
+        await AppDataSource.manager.insert(Restaurant, restaurantDto)
     }
 
     async update(id: number, updateRestaurantDto: UpdateRestaurantDto,) {
-        await AppDataSource.manager.update(Restaurant, id, {...updateRestaurantDto})
+        await AppDataSource.manager.update(Restaurant, id, updateRestaurantDto)
     }
 
     async remove(id: number) {
-       return await AppDataSource.manager.delete(Restaurant, id)
+        await AppDataSource.manager.delete(Restaurant, id)
     }
 
 
