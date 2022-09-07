@@ -19,20 +19,25 @@
       "test:cov": "jest --coverage",
       "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
       "test:e2e": "jest --config ./test/jest-e2e.json",
-      "typeorm": "typeorm-ts-node-commonjs"
+      "typeorm": "typeorm-ts-node-commonjs",
+      "typeorm:cli": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli -d src/db/data-source.ts",
+      "migration:generate": "./node_modules/.bin/ts-node ./node_modules/.bin/typeorm migration:generate -d src/db/ormconfig",
+      "migration:up": "./node_modules/.bin/ts-node ./node_modules/.bin/typeorm migration:run -d src/db/ormconfig",
+      "migration:down": "./node_modules/.bin/ts-node ./node_modules/.bin/typeorm migration:revert -d src/db/ormconfig"
    },
    "dependencies": {
       "@nestjs/common": "^9.0.0",
+      "@nestjs/config": "^2.2.0",
       "@nestjs/core": "^9.0.0",
       "@nestjs/platform-express": "^9.0.0",
       "@nestjs/typeorm": "^9.0.1",
       "mysql": "^2.18.1",
       "mysql2": "^2.3.3",
+      "pg": "^8.4.0",
       "reflect-metadata": "^0.1.13",
       "rimraf": "^3.0.2",
       "rxjs": "^7.2.0",
-      "typeorm": "0.3.9",
-      "pg": "^8.4.0"
+      "typeorm": "0.3.9"
    },
    "devDependencies": {
       "@nestjs/cli": "^9.0.0",

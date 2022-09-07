@@ -1,37 +1,40 @@
 import {Injectable} from "@nestjs/common";
 import {CreateRestaurantDto} from "./dto/create-restaurant.dto";
 import {UpdateRestaurantDto} from "./dto/update-restaurant.dto";
-import {AppDataSource} from "../db"
+import {AppDataSource} from "../../db/data-source"
 import {Restaurant} from "./entity/restaurant.entity"
 
 @Injectable()
 export class RestaurantsService {
 
+    private restaurantRepository = AppDataSource.getRepository(Restaurant)
+
     async getRestaurants() {
-        const result = await AppDataSource.manager.find(Restaurant, {
+        const result = await this.restaurantRepository.find({
             relations: {
-                categories: true,
-            },
-        })
+                categories: {
+                    products: true
+                },
+            }
+        });
         return {data: result}
     }
 
     async getRestaurant(id: number) {
-        const result = await AppDataSource.manager.findOneByOrFail(Restaurant, {id: id})
+        const result = await this.restaurantRepository.findOneByOrFail({id: id});
         return {data: result}
     }
 
     async create(restaurantDto: CreateRestaurantDto) {
-        await AppDataSource.manager.insert(Restaurant, restaurantDto)
+        await this.restaurantRepository.insert(restaurantDto);
     }
 
     async update(id: number, updateRestaurantDto: UpdateRestaurantDto,) {
-        await AppDataSource.manager.update(Restaurant, id, updateRestaurantDto)
+        await this.restaurantRepository.update(id, updateRestaurantDto);
     }
 
     async remove(id: number) {
-        await AppDataSource.manager.delete(Restaurant, id)
+        await this.restaurantRepository.delete(id);
     }
-
 
 }

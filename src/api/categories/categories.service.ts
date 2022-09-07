@@ -1,14 +1,18 @@
 import { Injectable } from '@nestjs/common';
-import {AppDataSource} from "../db";
-import {Category} from "../categories/entity/category.entity";
-import {CreateCategoryDto} from "../categories/dto/create-category.dto";
-import {UpdateCategoryDto} from "../categories/dto/update-category.dto";
+import {AppDataSource} from "../../db/data-source";
+import {Category} from "./entity/category.entity";
+import {CreateCategoryDto} from "./dto/create-category.dto";
+import {UpdateCategoryDto} from "./dto/update-category.dto";
 
 @Injectable()
 export class CategoriesService {
 
     async getCategories() {
-        const result = await AppDataSource.manager.find(Category)
+        const result = await AppDataSource.manager.find(Category, {
+            relations: {
+                products: true,
+            }
+        });
         return {data: result}
     }
 

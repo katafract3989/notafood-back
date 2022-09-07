@@ -24,7 +24,7 @@ export class Restaurant {
     @Column()
     preview: string
 
-    @OneToMany(() => Category, (category) => category.restaurantId)
+    @OneToMany(() => Category, (category) => category.restaurant)
     categories: Category[]
 
 }
