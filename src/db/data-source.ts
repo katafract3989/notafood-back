@@ -9,7 +9,7 @@ export const AppDataSource = new DataSource({
     username: process.env.DATABASE_USER,
     password: process.env.DATABASE_PASSWORD,
     database: process.env.DATABASE_NAME,
-    synchronize: false,
+    synchronize: true,
     entities: [__dirname + '/../**/*.entity.{js,ts}'],
 })
 

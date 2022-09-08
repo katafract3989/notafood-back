@@ -21,7 +21,16 @@ export class RestaurantsService {
     }
 
     async getRestaurant(id: number) {
-        const result = await this.restaurantRepository.findOneByOrFail({id: id});
+        const result = await this.restaurantRepository.findOne({
+          relations: {
+              categories: {
+                  products: true
+              }
+          },
+          where: {
+              id: id
+          }
+        }, );
         return {data: result}
     }
 
