@@ -19,18 +19,18 @@ export class CategoriesController {
     }
 
     @Post()
-    create(@Body() createProductDto: CreateCategoryDto) {
-        this.categoriesService.create(createProductDto)
+    async create(@Body() createProductDto: CreateCategoryDto) {
+       await this.categoriesService.create(createProductDto)
     }
 
     @Put(':id')
-    update(@Body() updateCategoryDto: UpdateCategoryDto, @Param('id') id: string) {
-        this.categoriesService.update(parseInt(id), updateCategoryDto)
+    async update(@Body() updateCategoryDto: UpdateCategoryDto, @Param('id') id: string) {
+        await this.categoriesService.update(parseInt(id), updateCategoryDto)
     }
 
     @Delete(':id')
-    remove(@Param('id') id: string) {
-        this.categoriesService.remove(parseInt(id))
+   async remove(@Param('id') id: string) {
+        await this.categoriesService.remove(parseInt(id))
     }
 
 

@@ -6,33 +6,33 @@ import {ProductsService} from "./products.service";
 @Controller('products')
 export class ProductsController {
 
-    constructor(private readonly productsService: ProductsService) {}
+    constructor(private readonly productsService: ProductsService) {
+    }
 
     @Get()
-    getRestaurants() {
-        return this.productsService.getProducts();
+    async getRestaurants() {
+        return await this.productsService.getProducts();
     }
 
     @Get(':id')
-    getRestaurant(@Param('id') id: string) {
-        return this.productsService.getProduct(parseInt(id));
+    async getRestaurant(@Param('id') id: string) {
+        return await this.productsService.getProduct(parseInt(id));
     }
 
     @Post()
-    create(@Body() createProductDto: CreateProductDto) {
-        this.productsService.create(createProductDto)
+    async create(@Body() createProductDto: CreateProductDto) {
+        await this.productsService.create(createProductDto)
     }
 
     @Put(':id')
-    update(@Body() updateProductDto: UpdateProductDto, @Param('id') id: string) {
-        this.productsService.update(parseInt(id), updateProductDto)
+    async update(@Body() updateProductDto: UpdateProductDto, @Param('id') id: string) {
+        await this.productsService.update(parseInt(id), updateProductDto)
     }
 
     @Delete(':id')
-    remove(@Param('id') id: string) {
-        this.productsService.remove(parseInt(id))
+    async remove(@Param('id') id: string) {
+        await this.productsService.remove(parseInt(id))
     }
-
 
 
 }

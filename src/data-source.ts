@@ -1,6 +1,7 @@
-import { DataSource } from "typeorm"
+import {DataSource} from "typeorm"
+
 const dotenv = require("dotenv")
-dotenv.config({ path: './.env' });
+dotenv.config({path: './.env'});
 
 export const AppDataSource = new DataSource({
     type: "mysql",
@@ -10,7 +11,8 @@ export const AppDataSource = new DataSource({
     password: process.env.DATABASE_PASSWORD,
     database: process.env.DATABASE_NAME,
     synchronize: true,
-    entities: [__dirname + '/../**/*.entity.{js,ts}'],
+    entities: [__dirname + "/entities/**/*{.ts,.js}"],
+    logging: true,
 })
 
 AppDataSource.initialize()
@@ -18,5 +20,5 @@ AppDataSource.initialize()
         console.log("Data Source has been initialized!")
     })
     .catch((err) => {
-        console.error("Error during Data Source initialization", err)
+        console.error("Error during Data Source initialization", err.error)
     })

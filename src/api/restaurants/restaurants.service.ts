@@ -1,8 +1,8 @@
-import {Injectable} from "@nestjs/common";
+import {HttpException, HttpStatus, Injectable} from "@nestjs/common";
 import {CreateRestaurantDto} from "./dto/create-restaurant.dto";
 import {UpdateRestaurantDto} from "./dto/update-restaurant.dto";
-import {AppDataSource} from "../../db/data-source"
-import {Restaurant} from "./entity/restaurant.entity"
+import {AppDataSource} from "../../data-source"
+import {Restaurant} from "../../entities/restaurant"
 
 @Injectable()
 export class RestaurantsService {
@@ -10,14 +10,15 @@ export class RestaurantsService {
     private restaurantRepository = AppDataSource.getRepository(Restaurant)
 
     async getRestaurants() {
-        const result = await this.restaurantRepository.find({
-            relations: {
-                categories: {
-                    products: true
-                },
-            }
-        });
-        return {data: result}
+        const result = await this.restaurantRepository.find();
+        if (result) {
+            return {data: result}
+        } else {
+            throw new HttpException({
+                status: HttpStatus.NO_CONTENT,
+                message: 'В Вашем районе нет ресторанов с доставкой',
+            }, HttpStatus.NO_CONTENT);
+        }
     }
 
     async getRestaurant(id: number) {
@@ -30,12 +31,27 @@ export class RestaurantsService {
           where: {
               id: id
           }
-        }, );
-        return {data: result}
+        });
+
+        if (result) {
+            return {data: result}
+        } else {
+            throw new HttpException({
+                status: HttpStatus.NOT_FOUND,
+                message: 'Ресторан не найден',
+            }, HttpStatus.NOT_FOUND);
+        }
     }
 
     async create(restaurantDto: CreateRestaurantDto) {
-        await this.restaurantRepository.insert(restaurantDto);
+        try {
+            await this.restaurantRepository.insert(restaurantDto);
+        } catch (e) {
+            throw new HttpException({
+                status: HttpStatus.INTERNAL_SERVER_ERROR,
+                message: e.sqlMessage,
+            }, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     async update(id: number, updateRestaurantDto: UpdateRestaurantDto,) {
