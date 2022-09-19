@@ -26,7 +26,7 @@ export class CategoriesService {
             return {data: result}
         } else {
             throw new HttpException({
-                status: HttpStatus.NOT_FOUND,
+                statusCode: HttpStatus.NOT_FOUND,
                 message: 'Категория не найден',
             }, HttpStatus.NOT_FOUND);
         }
@@ -38,7 +38,7 @@ export class CategoriesService {
            await this.categoryRepository.insert(categoryDto)
         } catch (e) {
             throw new HttpException({
-                status: HttpStatus.INTERNAL_SERVER_ERROR,
+                statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
                 message: e.sqlMessage,
             }, HttpStatus.INTERNAL_SERVER_ERROR);
         }

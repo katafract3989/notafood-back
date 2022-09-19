@@ -5,11 +5,12 @@ import {
     Post,
     Body,
     Delete,
-    Put,
+    Put, UseGuards,
 } from '@nestjs/common';
 import {CreateRestaurantDto} from "./dto/create-restaurant.dto";
 import {UpdateRestaurantDto} from "./dto/update-restaurant.dto";
 import {RestaurantsService} from "./restaurants.service";
+import {JwtAuthGuard} from "../../auth/jwt-auth.guard";
 
 @Controller('restaurants')
 
@@ -23,6 +24,8 @@ export class RestaurantsController {
         return this.restaurantService.getRestaurants();
     }
 
+    //TODO заглушка для теста ошибок авторизации. Убрать по завершению проверки авторизации.
+    @UseGuards(JwtAuthGuard)
     @Get(':id')
     getRestaurant(@Param('id') id: string) {
         return this.restaurantService.getRestaurant(parseInt(id));

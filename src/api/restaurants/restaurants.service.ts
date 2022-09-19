@@ -15,7 +15,7 @@ export class RestaurantsService {
             return {data: result}
         } else {
             throw new HttpException({
-                status: HttpStatus.NO_CONTENT,
+                statusCode: HttpStatus.NO_CONTENT,
                 message: 'В Вашем районе нет ресторанов с доставкой',
             }, HttpStatus.NO_CONTENT);
         }
@@ -37,7 +37,7 @@ export class RestaurantsService {
             return {data: result}
         } else {
             throw new HttpException({
-                status: HttpStatus.NOT_FOUND,
+                statusCode: HttpStatus.NOT_FOUND,
                 message: 'Ресторан не найден',
             }, HttpStatus.NOT_FOUND);
         }
@@ -48,7 +48,7 @@ export class RestaurantsService {
             await this.restaurantRepository.insert(restaurantDto);
         } catch (e) {
             throw new HttpException({
-                status: HttpStatus.INTERNAL_SERVER_ERROR,
+                statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
                 message: e.sqlMessage,
             }, HttpStatus.INTERNAL_SERVER_ERROR);
         }

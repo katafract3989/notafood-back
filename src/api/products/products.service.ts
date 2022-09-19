@@ -22,7 +22,7 @@ export class ProductsService {
             return {data: result}
         } else {
             throw new HttpException({
-                status: HttpStatus.NOT_FOUND,
+                statusCode: HttpStatus.NOT_FOUND,
                 message: 'Продукт не найден',
             }, HttpStatus.NOT_FOUND);
         }
@@ -31,10 +31,9 @@ export class ProductsService {
     async create(productDto: CreateProductDto) {
         try {
             await this.productRepository.insert(productDto);
-            console.log(productDto)
         } catch (e) {
             throw new HttpException({
-                status: HttpStatus.INTERNAL_SERVER_ERROR,
+                statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
                 message: e.sqlMessage,
             }, HttpStatus.INTERNAL_SERVER_ERROR);
         }
