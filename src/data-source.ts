@@ -12,7 +12,7 @@ export const AppDataSource = new DataSource({
     database: process.env.DATABASE_NAME,
     synchronize: true,
     entities: [__dirname + "/entities/**/*{.ts,.js}"],
-    logging: true,
+
 })
 
 AppDataSource.initialize()

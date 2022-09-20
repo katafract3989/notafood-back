@@ -45,7 +45,8 @@ export class RestaurantsService {
 
     async create(restaurantDto: CreateRestaurantDto) {
         try {
-            await this.restaurantRepository.insert(restaurantDto);
+            const result = await  this.restaurantRepository.insert(restaurantDto);
+            return result.raw.insertId
         } catch (e) {
             throw new HttpException({
                 statusCode: HttpStatus.INTERNAL_SERVER_ERROR,

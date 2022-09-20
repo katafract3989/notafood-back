@@ -6,4 +6,5 @@ export class UpdateRestaurantDto {
     readonly minDeliveryTime: number
     readonly maxDeliveryTime: number
     readonly categoryId: number
+    isActive: boolean
 }

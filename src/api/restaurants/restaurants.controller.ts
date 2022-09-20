@@ -24,8 +24,6 @@ export class RestaurantsController {
         return this.restaurantService.getRestaurants();
     }
 
-    //TODO заглушка для теста ошибок авторизации. Убрать по завершению проверки авторизации.
-    @UseGuards(JwtAuthGuard)
     @Get(':id')
     getRestaurant(@Param('id') id: string) {
         return this.restaurantService.getRestaurant(parseInt(id));
@@ -33,7 +31,7 @@ export class RestaurantsController {
 
     @Post()
     async create(@Body() createRestaurantDto: CreateRestaurantDto) {
-        await this.restaurantService.create(createRestaurantDto)
+       return await this.restaurantService.create(createRestaurantDto)
     }
 
     @Put(':id')

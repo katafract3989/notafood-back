@@ -21,8 +21,13 @@ export class Restaurant {
     @Column()
     maxDeliveryTime: number
 
-    @Column()
+    @Column({
+        default: 'https://twizz.ru/wp-content/uploads/2020/02/1582615693_a473b247515ba4634549d14b29064223.jpg'
+    })
     preview: string
+
+    @Column()
+    isActive: boolean
 
     @OneToMany(() => Category, (category) => category.restaurant)
     categories: Category[]
