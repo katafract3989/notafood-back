@@ -51,9 +51,9 @@ export class UsersService {
         }
 
         if(user.role === Roles.user) {
-            return this.baseResource.omit(user, ['password', 'restaurant']);
+            return this.baseResource.omit(user, ['password', 'restaurant', 'restaurantId']);
         } else {
-            return this.baseResource.omit(user, ['password']);
+            return this.baseResource.omit(user, ['password', 'restaurantId']);
         }
 
     }
